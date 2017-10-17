@@ -50,3 +50,44 @@ describe('Cell', function() {
         });
     });
 });
+
+describe('Coordinate', function() {
+
+    const rows = 100;
+    const cols = 100;
+
+    describe('Check Coordinate', function() {
+        it('Should construct Coordinate(1, 1)', function() {
+            let coordinate = new Coordinate(1, 1);
+            assert.equal(1, coordinate.x);
+            assert.equal(1, coordinate.y);
+        });
+    });
+
+    describe('Check index to Coordinate', function() {
+        it('Should return 101', function() {
+            let coordinate = new Coordinate(1, 1);
+            assert.equal(101, Coordinate.coordinateToIndex(coordinate, rows));
+        });
+
+        if('Should return 202 Coordinate', function() {
+                let coordinate = new Coordinate(2, 2);
+                assert.equal(202, Coordinate.coordinateToIndex(coordinate, rows));
+            });
+    });
+
+    describe('Check Coordinate to index', function() {
+
+        it('Should return Coordinate(1, 1)', function() {
+            let coordinate = Coordinate.indexToCoordinate(101, rows, cols);
+            assert.equal(1, coordinate.x);
+            assert.equal(1, coordinate.y);
+        });
+
+        it('Should return Coordinate(2, 2)', function() {
+            let coordinate = Coordinate.indexToCoordinate(202, rows, cols);
+            assert.equal(2, coordinate.x);
+            assert.equal(2, coordinate.y);
+        });
+    })
+});
