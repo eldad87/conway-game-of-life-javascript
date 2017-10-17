@@ -1,6 +1,7 @@
 const assert = require('assert');
 const Cell = require("./../src/Cell");
 const Coordinate = require("./../src/Coordinate");
+const Organism = require("./../src/Organism");
 
 describe('Cell', function() {
 
@@ -8,7 +9,7 @@ describe('Cell', function() {
         let cell = new Cell(true);
 
         it('Should be active', function() {
-            assert.equal(true, cell.isActive);
+            assert.equal(true, cell.status);
         });
     });
 
@@ -16,37 +17,54 @@ describe('Cell', function() {
         let cell = new Cell(false);
 
         it('Should be in-active', function() {
-            assert.equal(false, cell.isActive);
+            assert.equal(false, cell.status);
         });
     });
 
+    describe('Check if used to be Active', function() {
+        let cell = new Cell(true);
+        cell.status = false;
 
-    describe('Check activation cycle', function() {
+        it('Should be active', function() {
+            assert.equal(true, cell.previousStatus);
+        });
+    });
+
+    describe('Check if used to be In-Active', function() {
+        let cell = new Cell(false);
+        cell.status = true;
+
+        it('Should be in-active', function() {
+            assert.equal(false, cell.previousStatus);
+        });
+    });
+
+    describe('Check status cycle', function() {
         let cell = new Cell(true);  // 4
-        cell.isActive = false;      // 3
-        cell.isActive = false;      // 2
-        cell.isActive = true;       // 1 prev
-        cell.isActive = true;       // 0 Current
+        cell.status = false;      // 3
+        cell.status = false;      // 2
+        cell.status = true;       // 1 prev
+        cell.status = true;       // 0 Current
         // 11001
 
         it('Should be active', function() {
-            assert.equal(true, cell.getActivationCycle(0));
+            assert.equal(true, cell.getStatusByCycle(0));
         });
 
         it('Should have been active 1 cycle ago', function() {
-            assert.equal(true, cell.getActivationCycle(1));
+            assert.equal(true, cell.getStatusByCycle(1));
         });
 
         it('Should have been in-active 2 cycles ago', function() {
-            assert.equal(false, cell.getActivationCycle(2));
+            assert.equal(false, cell.getStatusByCycle(2));
         });
 
         it('Should have been in-active 3 cycles ago', function() {
-            assert.equal(false, cell.getActivationCycle(3));
+            assert.equal(false, cell.getStatusByCycle(3));
         });
 
         it('Should have been in-active 4 cycles ago', function() {
-            assert.equal(true, cell.getActivationCycle(4));
+            assert.equal(true, cell.getStatusByCycle(4));
         });
     });
 });
@@ -77,7 +95,6 @@ describe('Coordinate', function() {
     });
 
     describe('Check Coordinate to index', function() {
-
         it('Should return Coordinate(1, 1)', function() {
             let coordinate = Coordinate.indexToCoordinate(101, rows, cols);
             assert.equal(1, coordinate.x);

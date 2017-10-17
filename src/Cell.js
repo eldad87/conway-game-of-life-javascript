@@ -1,18 +1,19 @@
 class Cell {
+
     constructor(isActive) {
-        this.isActive = isActive;
+        this.status = isActive;
     }
 
     /**
      * Set Cell's activation status
-     * @param isActive
+     * @param status
      */
-    set isActive(isActive) {
+    set status(status) {
         // 000001 -> 000010
-        this._isActive = this._isActive << 1;
-        if(isActive) {
+        this._status = this._status << 1;
+        if(status) {
             // 000010 -> 000011
-            this._isActive = this._isActive | 1;
+            this._status = this._status | 1;
         }
     }
 
@@ -20,8 +21,12 @@ class Cell {
      * Get activation status
      * @returns boolean
      */
-    get isActive() {
-        return this._isActive & 1 === 1;
+    get status() {
+        return this._status & 1 === 1;
+    }
+
+    get previousStatus() {
+        return this.getStatusByCycle(1);
     }
 
     /**
@@ -32,8 +37,8 @@ class Cell {
      * @param cyclesAgo
      * @returns bool
      */
-    getActivationCycle(cyclesAgo) {
-        return (this._isActive >> cyclesAgo) & 1 === 1;
+    getStatusByCycle(cyclesAgo) {
+        return (this._status >> cyclesAgo) & 1 === 1;
     }
 }
 
