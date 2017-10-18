@@ -1,5 +1,11 @@
 # conway-game-of-life-javascript
-A JavaScript implementation of Conway's Game of Life 
+A JavaScript implementation of Conway's Game of Life
 
 ## Test
-$ npm test
+$ yarn test
+
+## Build
+$ yarn build
+
+## Run dev
+$ yarn dev

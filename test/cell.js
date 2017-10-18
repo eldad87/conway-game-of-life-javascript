@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Cell = require("../src/cell");
+const Cell = require("../src/js/cell");
 
 describe('Cell', function() {
 

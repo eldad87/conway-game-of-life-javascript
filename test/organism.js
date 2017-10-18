@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Organism = require("../src/organism");
+const Organism = require("../src/js/organism");
 
 describe('Organism', function() {
 
