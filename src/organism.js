@@ -24,6 +24,11 @@ class Organism {
         }
     }
 
+    /**
+     * Set the given coordinates as active
+     * @param coordinates<[x, y]>
+     * @returns {Organism}
+     */
     setCellActiveState(coordinates) {
         let activeIndexes = coordinates.map( (coordinate) => this._coordinateToIndex(coordinate[0], coordinate[1]) );
         for(let i = 0; i < this._cells.length; i++) {
@@ -33,12 +38,20 @@ class Organism {
         return this;
     }
 
+    /**
+     * Evolve our cells
+     * @returns {Organism}
+     */
     evolve() {
         this._cells.forEach( (cell, index) =>
             cell.evolve());
         return this;
     }
-    
+
+    /**
+     * Get a 2D structure with cell state (bool)
+     * @returns {Array}
+     */
     get cells() {
         let finalArr = new Array(this.height)
             .fill()
