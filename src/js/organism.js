@@ -1,3 +1,5 @@
+'use strict';
+
 const Cell = require("./cell");
 
 class Organism {
@@ -7,21 +9,28 @@ class Organism {
      * @param width
      */
     constructor(height, width) {
-        this.height = height;
-        this.width = width;
+        this._height = height;
+        this._width = width;
         this._cells = [];
+        this._init();
+    }
 
-        for(let x = 0; x < height; x++) {
-            for(let y = 0; y < width; y++) {
-                this._cells.push(new Cell(false));
-            }
-        }
+    set width(width) {
+        this._width = parseInt(width);
+        this._init();
+    }
 
-        for(let x = 0; x < height; x++) {
-            for(let y = 0; y < width; y++) {
-                this._cells[this._coordinateToIndex(x, y)].neghbors = this._getNeighbors(x, y);
-            }
-        }
+    get width() {
+        return this._width;
+    }
+
+    set height(height) {
+        this._height = parseInt(height);
+        this._init();
+    }
+
+    get height() {
+        return this._height;
     }
 
     /**
@@ -30,7 +39,8 @@ class Organism {
      * @returns {Organism}
      */
     setCellActiveState(coordinates) {
-        let activeIndexes = coordinates.map( (coordinate) => this._coordinateToIndex(coordinate[0], coordinate[1]) );
+        let activeIndexes = coordinates.map( (coordinate) =>
+            this._coordinateToIndex(coordinate[0], coordinate[1]));
         for(let i = 0; i < this._cells.length; i++) {
             this._cells[i].state = (activeIndexes.indexOf(i) >= 0);
         }
@@ -53,17 +63,31 @@ class Organism {
      * @returns {Array}
      */
     get cells() {
-        let finalArr = new Array(this.height)
-            .fill()
-            .map( () => new Array(this.width) );
-
+        let finalArr = new Array(this.height);
         for(let x = 0; x < this.height; x++) {
+            finalArr[x] = new Array(this.width);
             for(let y = 0; y < this.width; y++) {
                 finalArr[x][y] = this._getCell(x, y).state;
             }
         }
 
         return finalArr;
+    }
+
+    _init() {
+        this._cells = [];
+
+        for(let x = 0; x < this.height; x++) {
+            for(let y = 0; y < this.width; y++) {
+                this._cells.push(new Cell(false));
+            }
+        }
+
+        for(let x = 0; x < this.height; x++) {
+            for(let y = 0; y < this.width; y++) {
+                this._cells[this._coordinateToIndex(x, y)].neghbors = this._getNeighbors(x, y);
+            }
+        }
     }
 
     /**
@@ -108,7 +132,7 @@ class Organism {
      */
     _coordinateToIndex(x, y) {
         let [wrapX, wrapY] = this._wrapCoordinate(x, y);
-        return wrapX * this.height + wrapY;
+        return wrapX * this.width + wrapY;
     }
 
     /**

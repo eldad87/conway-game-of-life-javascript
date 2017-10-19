@@ -1,3 +1,5 @@
+'use strict';
+
 class Cell {
 
     constructor(isActive) {
@@ -10,7 +12,7 @@ class Cell {
      * Set state
      * @param state
      */
-    set state(state) { //state
+    set state(state) {
         // 000001 -> 000010
         this._state = this._state << 1;
         if(state) {
@@ -45,6 +47,10 @@ class Cell {
         return (this._state >> cyclesAgo) & 1 === 1;
     }
 
+    /**
+     * Change the cell's status according to the game rules
+     * @returns {Cell}
+     */
     evolve() {
         let totalActive = 0;
         for(let i = 0; i < this.neghbors.length; i++) {
