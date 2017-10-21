@@ -85,7 +85,7 @@ class Organism {
 
         for(let x = 0; x < this.height; x++) {
             for(let y = 0; y < this.width; y++) {
-                this._cells[this._coordinateToIndex(x, y)].neghbors = this._getNeighbors(x, y);
+                this._cells[this._coordinateToIndex(x, y)].neighbors = this._getNeighbors(x, y);
             }
         }
     }

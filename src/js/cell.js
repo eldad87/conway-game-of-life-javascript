@@ -4,7 +4,7 @@ class Cell {
 
     constructor(isActive) {
         this._state = isActive;
-        this.neghbors = [];
+        this.neighbors = [];
         this.age = 0;
     }
 
@@ -48,23 +48,23 @@ class Cell {
     }
 
     /**
-     * Change the cell's status according to the game rules
+     * Change the cell's state according to the game rules
      * @returns {Cell}
      */
     evolve() {
-        let totalActive = 0;
-        for(let i = 0; i < this.neghbors.length; i++) {
-            totalActive +=
-                (this.neghbors[i].age > this.age
-                    ? this.neghbors[i].previousState
-                    : this.neghbors[i].state) ? 1 : 0
+        let livingNeighborsCount = 0;
+        for(let i = 0; i < this.neighbors.length; i++) {
+            livingNeighborsCount +=
+                (this.neighbors[i].age > this.age
+                    ? this.neighbors[i].previousState
+                    : this.neighbors[i].state) ? 1 : 0
         }
 
         this.state = (
-            3 === totalActive ||
+            3 === livingNeighborsCount ||
             (
                 true === this.state &&
-                2 === totalActive
+                2 === livingNeighborsCount
             )
         );
 
